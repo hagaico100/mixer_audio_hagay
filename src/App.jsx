@@ -11,7 +11,7 @@ import f from './sounds/HE HE VOC.mp3'
 import g from './sounds/HIGH VOC.mp3'
 import h from './sounds/JIBRISH.mp3'
 import i from './sounds/UUHO VOC.mp3'
-
+import { FaPlay, FaPause, FaStop,FaShare} from 'react-icons/fa';
 
 function App() {
   const sounds = [a, b, c, d, e, f, g, h, i];
@@ -36,17 +36,59 @@ useEffect(() => {
 
 }, []);
 
+
+
 useEffect(() => {
 if(play){
  setInterval(() => {
   setTime((allSounds[0].currentTime).toFixed(0));
-  setDuration(allSounds[0].duration.toFixed(0));
+  setDuration(Math.ceil(allSounds[0].duration));
+  if(allSounds[0].ended){
+    // to replace disabled btn:
+    (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
+    (allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
+    }
 
  
 }, 1000);
-
+if(allSounds[0].ended){
+// to replace disabled btn:
+(allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
+(allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
+}
 } 
 }, [play]);
+
+
+
+
+
+/*
+useEffect(() => {
+  if(play){
+   setInterval(() => {
+    setDuration(allSounds[0].duration.toFixed(0));
+    
+    if(allSounds[0].ended){
+      // to replace disabled btn:
+      (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
+      (allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
+      }
+   
+  }, 1000);
+  if(allSounds[0].ended){
+  // to replace disabled btn:
+  (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
+  (allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
+  }
+  } 
+  }, [play]);
+
+*/
+
+
+
+
 
 
 
@@ -85,16 +127,20 @@ function loopS (){
   });
 }
 
+function sendTime (timeC){
+ setTime(timeC);
+}
+
 
 return (
     <div className="App">
      
-     
-     <button className="play" onClick={() => playS() }>הפעל</button>
-     <button className="pause" onClick={() => pauseS() }>השהה</button>
-     <button className="stop" onClick={() => stopS() }>עצור</button>
-     <button className="loop" onClick={() => loopS() }>לולאה</button>
+     <button className="play" onClick={() => playS() }><FaPlay/></button>
+     <button className="pause" onClick={() => pauseS() }><FaPause/></button>
+     <button className="stop" onClick={() => stopS() }><FaStop/></button>
+     <button className="loop" onClick={() => loopS() }><FaShare/></button>
   <br/>
+
 {allSounds.map( (element, index) => 
   <Channel 
   key= {index}
@@ -103,6 +149,7 @@ return (
   play={play}
   time={time}
   duration={duration}
+  sendTime= {sendTime}
  />
 
  )}
