@@ -1,7 +1,6 @@
 import './App.css';
 import Channel from './Channel';
 import React,{useState, useEffect} from 'react';
-import {Howl, Howler} from 'howler';
 import a from './sounds/LEAD 1.mp3'
 import b from './sounds/_tambourine_shake_higher.mp3'
 import c from './sounds/ALL TRACK.mp3'
@@ -24,7 +23,7 @@ function App() {
   const loopBtn = document.querySelector('.loop');
   const stopBtn = document.querySelector('.stop');
  
-// run function one time in start:
+// run function one time in start to init all song:
 useEffect(() => {
   sounds.map((element) => {
     var song = new Audio(element);
@@ -40,9 +39,11 @@ useEffect(() => {
 
 useEffect(() => {
 if(play){
+  //when the song is running:
  setInterval(() => {
   setTime((allSounds[0].currentTime).toFixed(0));
   setDuration(Math.ceil(allSounds[0].duration));
+  //when song is finished yhe btn return to to action:
   if(allSounds[0].ended){
     // to replace disabled btn:
     (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
@@ -58,38 +59,6 @@ if(allSounds[0].ended){
 }
 } 
 }, [play]);
-
-
-
-
-
-/*
-useEffect(() => {
-  if(play){
-   setInterval(() => {
-    setDuration(allSounds[0].duration.toFixed(0));
-    
-    if(allSounds[0].ended){
-      // to replace disabled btn:
-      (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
-      (allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
-      }
-   
-  }, 1000);
-  if(allSounds[0].ended){
-  // to replace disabled btn:
-  (allSounds[0].ended)?  pauseBtn.disabled = true :pauseBtn.disabled = false; 
-  (allSounds[0].ended)?  playBtn.disabled = false :playBtn.disabled = true;
-  }
-  } 
-  }, [play]);
-
-*/
-
-
-
-
-
 
 
 function playS (){
@@ -129,6 +98,10 @@ function loopS (){
 
 function sendTime (timeC){
  setTime(timeC);
+
+ allSounds.forEach( (element) => {
+  element.currentTime = timeC;
+});
 }
 
 
