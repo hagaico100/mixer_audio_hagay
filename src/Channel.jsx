@@ -19,14 +19,14 @@ const [timeC, setTimeC] = useState(0);
     //check audio is playing on mute or not:
     (!sound.muted)? 	sound.muted=true: sound.muted=false;
       }
-   
+      const color = {color: props.color} ;
       return( 
           
       <div className="">
     <span><button className="muteBtn" onClick={() => playOrMute(sound)}>{(!sound.muted)? <FaVolumeUp /> : <FaVolumeMute />}</button></span>
-    <span>  name: song{props.id+1} </span>
+    <span style={color}>  name: song{props.id+1} </span>
     <span> ({props.time}) </span>
-    <span>  <input className="range" type="range" min="0" max={props.duration} value={props.time} onChange={changeDuration}></input></span>
+    <span>  <input className="range " type="range" min="0" max={props.duration} value={props.time} onChange={changeDuration}></input></span>
     <span>   ({props.duration}) </span>
     <audio src={sound}></audio>
     </div>

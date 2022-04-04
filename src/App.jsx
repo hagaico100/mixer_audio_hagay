@@ -22,7 +22,7 @@ function App() {
   const pauseBtn = document.querySelector('.pause');
   const loopBtn = document.querySelector('.loop');
   const stopBtn = document.querySelector('.stop');
- 
+  const color = ["red","blue","green","yellow","cyan", "orange", "black","pink", "white"]
 // run function one time in start to init all song:
 useEffect(() => {
   sounds.map((element) => {
@@ -123,6 +123,7 @@ return (
   time={time}
   duration={duration}
   sendTime= {sendTime}
+  color= {color[index]}
  />
 
  )}
